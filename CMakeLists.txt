@@ -12,6 +12,8 @@ endif()
 
 # Include the CMSIS SDK
 add_library(pico_debug STATIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/pico_debug.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/tusb_integration.c
   ${CMSIS_SDK_PATH}/CMSIS/DAP/Firmware/Source/DAP.c
   ${CMSIS_SDK_PATH}/CMSIS/DAP/Firmware/Source/DAP_vendor.c
   ${CMSIS_SDK_PATH}/CMSIS/DAP/Firmware/Source/JTAG_DP.c
@@ -19,10 +21,12 @@ add_library(pico_debug STATIC
   ${CMSIS_SDK_PATH}/CMSIS/DAP/Firmware/Source/SWO.c
 )
 target_compile_definitions(pico_debug PRIVATE -DCFG_TUSB_MCU=OPT_MCU_RP2040)
-target_include_directories(pico_debug PRIVATE
+target_include_directories(pico_debug PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMSIS_SDK_PATH}/CMSIS/Core/Include
   ${CMSIS_SDK_PATH}/CMSIS/DAP/Firmware/Include
+  ${PICO_SDK_PATH}/src/rp2_common/cmsis/stub/CMSIS/Core/Include
+)
+target_include_directories(pico_debug PRIVATE
   ${PICO_SDK_PATH}/lib/tinyusb/hw/
   ${PICO_SDK_PATH}/lib/tinyusb/src/
   ${PICO_SDK_PATH}/src/boards/include/

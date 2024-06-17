@@ -62,9 +62,16 @@ This information includes:
 #include <hardware/regs/syscfg.h>
 #include <hardware/structs/syscfg.h>
 
+// Use this to inject any custom pre-processor symbol definitions
+#if __has_include("pico_debug_prj.h")
+#include "pico_debug_prj.h"
+#endif
+
 /// Processor Clock of the Cortex-M MCU used in the Debug Unit.
 /// This value is used to calculate the SWD/JTAG clock speed.
+#ifndef CPU_CLOCK
 #define CPU_CLOCK               48000000U       ///< Specifies the CPU Clock in Hz.
+#endif
 
 /// Number of processor cycles for I/O Port write operations.
 /// This value is used to calculate the SWD/JTAG clock speed that is generated with I/O

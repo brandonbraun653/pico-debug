@@ -1,0 +1,8 @@
+# Copy this file to /etc/udev/rules.d/
+ACTION!="add|change", GOTO="openocd_rules_end"
+SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"
+
+# This matches up with the vendor/product ID in tusb_integration.c
+ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2488", MODE="664", GROUP="plugdev"
+
+LABEL="openocd_rules_end"
